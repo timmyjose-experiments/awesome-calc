@@ -1,3 +1,4 @@
+use awesome_calc::lexer::Lexer;
 use std::io::{self, Write};
 
 const SPLASH: &str = r#"
@@ -24,7 +25,11 @@ fn main() -> eyre::Result<()> {
     loop {
         print!("{PROMPT}");
         io::stdout().lock().flush()?;
+
         let input = get_input()?;
-        println!("{input}");
+        let lexer = Lexer::new(input);
+        lexer.for_each(|tok| {
+            println!("{tok:#?}");
+        })
     }
 }

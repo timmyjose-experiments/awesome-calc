@@ -1,4 +1,5 @@
 mod ast;
-mod evaluator;
-mod lexer;
-mod parser;
+mod error;
+pub mod evaluator;
+pub mod lexer;
+pub mod parser;
