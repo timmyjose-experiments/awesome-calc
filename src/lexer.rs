@@ -23,8 +23,8 @@ pub enum TokenKind {
 
 #[derive(Debug, Clone, PartialEq, PartialOrd)]
 pub struct Token {
-    kind: TokenKind,
-    spelling: String,
+    pub kind: TokenKind,
+    pub spelling: String,
 }
 
 pub struct Lexer {
@@ -66,7 +66,7 @@ impl Lexer {
 
         match self.curr_char {
             Some(c) if c.is_numeric() => {
-                while self.curr_char.is_some_and(|c| c.is_numeric()) {
+                while self.curr_char.is_some_and(|c| c.is_numeric() || c == '.') {
                     self.eat_it()?;
                 }
                 tok_kind = TokenKind::Number;

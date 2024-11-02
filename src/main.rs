@@ -1,4 +1,4 @@
-use awesome_calc::lexer::Lexer;
+use awesome_calc::{error::Result, lexer::Lexer, parser::Parser};
 use std::io::{self, Write};
 
 const SPLASH: &str = r#"
@@ -12,14 +12,14 @@ Welcome! v1.0.0
 
 const PROMPT: &str = ">> ";
 
-fn get_input() -> eyre::Result<String> {
+fn get_input() -> Result<String> {
     let mut input = String::new();
 
     io::stdin().read_line(&mut input)?;
     Ok(input.trim().to_owned())
 }
 
-fn main() -> eyre::Result<()> {
+fn main() -> Result<()> {
     println!("{SPLASH}");
 
     loop {
@@ -27,9 +27,8 @@ fn main() -> eyre::Result<()> {
         io::stdout().lock().flush()?;
 
         let input = get_input()?;
-        let lexer = Lexer::new(input);
-        lexer.for_each(|tok| {
-            println!("{tok:#?}");
-        })
+        let mut parser = Parser::new(Lexer::new(input));
+        let ast = parser.parse()?;
+        println!("{ast}");
     }
 }

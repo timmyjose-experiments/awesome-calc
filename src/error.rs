@@ -3,9 +3,16 @@ use super::{evaluator, lexer, parser};
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
     #[error(transparent)]
-    LexerError(#[from] lexer::Error),
+    Lexer(#[from] lexer::Error),
+
     #[error(transparent)]
-    ParserError(#[from] parser::Error),
+    Parser(#[from] parser::Error),
+
     #[error(transparent)]
-    EvalError(#[from] evaluator::Error),
+    Eval(#[from] evaluator::Error),
+
+    #[error(transparent)]
+    Io(#[from] std::io::Error),
 }
+
+pub type Result<T> = std::result::Result<T, Error>;
