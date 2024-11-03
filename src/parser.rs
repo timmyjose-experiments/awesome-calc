@@ -19,13 +19,13 @@ pub enum Error {
 
 pub type Result<T> = std::result::Result<T, Error>;
 
-pub struct Parser {
+pub struct Parser<S: AsRef<str>> {
     curr_tok: Option<Token>,
-    lexer: Lexer,
+    lexer: Lexer<S>,
 }
 
-impl Parser {
-    pub fn new(lexer: Lexer) -> Self {
+impl<S: AsRef<str>> Parser<S> {
+    pub fn new(lexer: Lexer<S>) -> Self {
         Self {
             lexer,
             curr_tok: None,

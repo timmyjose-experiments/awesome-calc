@@ -27,17 +27,17 @@ pub struct Token {
     pub spelling: String,
 }
 
-pub struct Lexer {
-    s: String,
+pub struct Lexer<S: AsRef<str>> {
+    s: S,
     curr_char: Option<char>,
     curr_idx: usize,
     curr_spelling: String,
 }
 
-impl Lexer {
-    pub fn new(s: String) -> Self {
+impl<S: AsRef<str>> Lexer<S> {
+    pub fn new(s: S) -> Self {
         let curr_idx = 0;
-        let curr_char = s.chars().nth(0);
+        let curr_char = s.as_ref().chars().nth(0);
 
         Self {
             s,
@@ -49,14 +49,14 @@ impl Lexer {
 
     fn skip_it(&mut self) {
         self.curr_idx += 1;
-        self.curr_char = self.s.chars().nth(self.curr_idx);
+        self.curr_char = self.s.as_ref().chars().nth(self.curr_idx);
     }
 
     fn eat_it(&mut self) -> Result<()> {
         self.curr_spelling
             .push(self.curr_char.ok_or_else(|| Error::NoCharactersToEat)?);
         self.curr_idx += 1;
-        self.curr_char = self.s.chars().nth(self.curr_idx);
+        self.curr_char = self.s.as_ref().chars().nth(self.curr_idx);
 
         Ok(())
     }
@@ -124,7 +124,7 @@ impl Lexer {
     }
 }
 
-impl Iterator for Lexer {
+impl<S: AsRef<str>> Iterator for Lexer<S> {
     type Item = Token;
 
     fn next(&mut self) -> Option<Self::Item> {
