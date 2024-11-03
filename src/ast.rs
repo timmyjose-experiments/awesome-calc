@@ -3,7 +3,6 @@ use std::fmt;
 #[derive(Debug)]
 pub enum Ast {
     Number(f64),
-    Op(Op),
     UnaryExpr {
         op: Op,
         rhs: Box<Ast>,
@@ -22,7 +21,6 @@ impl fmt::Display for Ast {
             "{}",
             match *self {
                 Ast::Number(ref n) => n.to_string(),
-                Ast::Op(ref op) => op.to_string(),
                 Ast::UnaryExpr { ref op, ref rhs } => {
                     format!("{op}{rhs}")
                 }

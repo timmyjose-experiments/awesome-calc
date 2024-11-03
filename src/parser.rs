@@ -44,6 +44,7 @@ impl Parser {
                     expected_kind, tok.kind
                 )))
             } else {
+                self.match_it();
                 Ok(())
             }
         } else {
