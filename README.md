@@ -1,0 +1,1 @@
+A simple arithmetic expressions lexer, parser, and evaluator written in Rust.
