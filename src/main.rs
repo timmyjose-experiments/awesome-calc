@@ -28,7 +28,9 @@ fn main() -> Result<()> {
 
         let input = get_input()?;
         let mut parser = Parser::new(Lexer::new(input));
-        let ast = parser.parse()?;
-        println!("{ast}");
+        match parser.parse() {
+            Ok(ast) => println!("{ast}"),
+            Err(err) => eprintln!("{err}"),
+        }
     }
 }

@@ -7,7 +7,7 @@ use crate::{
 
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
-    #[error("ran out of tokens while parsing")]
+    #[error("Ran out of tokens while parsing")]
     NoMoreTokens,
 
     #[error("Parsing error: {0}")]
